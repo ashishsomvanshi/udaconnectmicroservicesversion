@@ -1,0 +1,11 @@
+The documentation for LocationEventService ProtoBuff to be used by the service to make gRPC Connections.
+
+The EventLocationMessage has three items to transfer as a message userId, latitude and longitude as outlined in location_event.proto
+
+The folowing command can be run to generate required files to process location_event.proto
+
+ python3 -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ location_event.proto
+
+or 
+
+ python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ location_event.proto

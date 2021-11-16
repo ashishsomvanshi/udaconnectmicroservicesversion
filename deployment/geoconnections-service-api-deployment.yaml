@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: geoconnections-api
+  name: geoconnections-svc-api
+spec:
+  ports:
+    - name: "5000"
+      port: 5000
+      targetPort: 5000
+      nodePort: 30002
+  selector:
+    service: geoconnections-api
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: geoconnections-api
+  name: geoconnections-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: geoconnections-api
+  template:
+    metadata:
+      labels:
+        service: geoconnections-api
+    spec:
+      containers:
+        - image: themultitoolguy/connectionservice:latest
+          name: geoconnections-api-container
+          imagePullPolicy: Always
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-connection-configmap
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection-secret
+                  key: DB_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-connection-configmap
+                  key: DB_NAME
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: db-connection-configmap
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: db-connection-configmap
+                  key: DB_PORT
+            - name: PERSON_SERVICE_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: db-connection-configmap
+                  key: PERSON_SERVICE_ENDPOINT
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "64m"
+            limits:
+              memory: "256Mi"
+              cpu: "256m"
+      restartPolicy: Always

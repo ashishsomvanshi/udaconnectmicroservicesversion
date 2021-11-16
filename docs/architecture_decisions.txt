@@ -1,0 +1,15 @@
+The original Monolithic app is splitinto five modules using three message passing techniques REST API, gRPC and Distributed Message Queuing via Apache Kafka:
+1. PersonService
+   	PersonService keeps user information and inracts with other modules as shown in Architecture Diagram.
+2. ConnectionService
+        PersonService keeps connection information and inracts with other modules as shown in Architecture Diagram.
+ 3. LoctionPreProssessorServices 
+        LoctionPreProssessorService acts as Kafka Consumer and this data will be stored in postgres database.
+ 4. LocationEventService
+	LocationEventService process locations sent via user device via gRPC, conserdering the volume of data sent in real life senerios and the efficiency and privacy of the binary protocol is utilised.
+	It acts as kafaka producer.
+5. Frontend
+        This is a Recat based frontend, where the end user interacts with the UdaConnect App.
+
+We can treat Apache Kaffka as the sixth module of the new microservices based app.
+
