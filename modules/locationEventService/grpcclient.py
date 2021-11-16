@@ -5,7 +5,7 @@ import location_event_pb2 as pb2
 print("Sending Location")
 
 channel = grpc.insecure_channel("localhost:5005")
-stub = pb2_grpc.ItemServiceStub(channel)
+stub = pb2_grpc.EventLocationServiceStub(channel)
 
 user_location_1 = pb2.EventLocationMessage(
     userId=500,

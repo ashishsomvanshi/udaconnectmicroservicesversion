@@ -13,7 +13,7 @@ kafka_topic = os.environ["KAFKA_TOPIC"]
 
 producer = KafkaProducer(bootstrap_servers=kafka_url)
 
-class EventLocationService(pb2_grpc.EventLocationServicer):
+class EventLocationService(pb2_grpc.EventLocationServiceServicer):
 
     def __init__(self, *args, **kwargs):
         pass
@@ -32,7 +32,7 @@ class EventLocationService(pb2_grpc.EventLocationServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
-    pb2_grpc.add_EventLocationService_to_server(EventLocationService(), server)
+    pb2_grpc.add_EventLocationServiceServicer_to_server(EventLocationService(), server)
     server.add_insecure_port('[::]:5005')
     server.start()
     server.wait_for_termination()

@@ -1,6 +1,7 @@
 The documentation for LocationEventService ProtoBuff to be used by the service to make gRPC Connections.
 
 The EventLocationMessage has three items to transfer as a message userId, latitude and longitude as outlined in location_event.proto
+Sample grpcclient is also included with the code.
 
 The folowing command can be run to generate required files to process location_event.proto
 
